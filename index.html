@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Sueño de Marlon 2045</title>
+    <style>
+        :root {
+            --bg-color: #05070b;
+            --surface-color: rgba(13, 18, 30, 0.85);
+            --primary-glow: rgba(120, 200, 255, 0.4);
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-color: #38bdf8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #0d1322 0%, #05070b 100%);
+        }
+
+        nav {
+            width: 290px;
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        nav h1 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-color);
+            margin-bottom: 35px;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            text-align: left;
+            font-size: 0.9rem;
+            padding: 12px 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(56, 189, 248, 0.08);
+            color: #fff;
+            transform: translateX(4px);
+            border-left: 2px solid var(--accent-color);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .seccion {
+            display: none;
+            position: absolute;
+            text-align: left;
+            max-width: 650px;
+            width: 85%;
+            padding: 20px;
+        }
+
+        .seccion.active {
+            display: block;
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .seccion-centro {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .seccion-centro.active {
+            display: flex;
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .nucleo-brillante {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(120,200,255,0.5) 50%, transparent 80%);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 35px var(--primary-glow);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            animation: respirar 4s infinite ease-in-out;
+            margin-bottom: 25px;
+        }
+
+        @keyframes respirar {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 25px rgba(120, 200, 255, 0.3);
+            }
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 0 50px rgba(160, 220, 255, 0.7);
+            }
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .cita-padre {
+            font-style: italic;
+            color: #cbd5e1;
+            border-left: 2px solid var(--accent-color);
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+
+        .bitacora-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .bitacora-fecha {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            nav { width: 100%; height: auto; padding: 12px; flex-direction: row; overflow-x: auto; align-items: center; flex-shrink: 0; }
+            nav h1 { display: none; }
+            .menu-item { white-space: nowrap; margin-bottom: 0; margin-right: 6px; border-left: none !important; font-size: 0.85rem; padding: 8px 12px; }
+            .menu-item.active { border-bottom: 2px solid var(--accent-color); transform: none; background: rgba(56, 189, 248, 0.1); }
+            main { height: calc(100vh - 60px); padding: 10px; align-items: flex-start; overflow-y: auto; }
+            .seccion, .seccion-centro { position: relative; width: 100%; padding: 10px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>El Sueño 2045</h1>
+        <button class="menu-item active" onclick="cambiarSeccion('seccion-0', this)">00. El Núcleo</button>
+        <button class="menu-item" onclick="cambiarSeccion('seccion-1', this)">01. La Promesa</button>
+        <button class="menu-item" onclick="cambiarSeccion('seccion-2', this)">02. La Tecnología</button>
+        <button class="menu-item" onclick="cambiarSeccion('seccion-3', this)">03. Hacia el 2045</button>
+        <button class="menu-item" onclick="cambiarSeccion('seccion-4', this)">04. Alianzas</button>
+    </nav>
+
+    <main>
+        <!-- Sección 00: El Núcleo -->
+        <div id="seccion-0" class="seccion-centro active">
+            <div class="nucleo-brillante" id="nucleo"></div>
+            <h2>El Núcleo</h2>
+            <p>Toca o mantén la atención sobre la fuente de luz para despertar la interfaz y escuchar su pulso natural.</p>
+        </div>
+
+        <!-- Sección 01: La Promesa de un Padre -->
+        <div id="seccion-1" class="seccion">
+            <h2>01. La Promesa de un Padre</h2>
+            <p>Este espacio nace con un propósito profundo: permitir que mi hijo tenga la absoluta libertad de experimentar y crear lo que sea que venga a su mente desde temprana edad.</p>
+            <p class="cita-padre">"Sin sentir presión, sin caer en las trampas del vacío que impone el sistema, y lejos de la frustración de aquellos adultos que alguna vez soñaron con crear y fueron consumidos por las expectativas externas."</p>
+            <p>Construimos bajo nuestras propias reglas para proteger el juego, la curiosidad pura y el tiempo soberano.</p>
+        </div>
+
+        <!-- Sección 02: El Lenguaje de la Luz -->
+        <div id="seccion-2" class="seccion">
+            <h2>02. El Lenguaje de la Luz</h2>
+            <p>La tecnología que estamos creando no busca secuestrar los sentidos, sino devolverles su calma. Es una interfaz orgánica que dialoga a través del parpadeo, la vibración sutil y frecuencias armónicas que imitan la naturaleza.</p>
+            <p class="cita-padre">"El desarrollo tecnológico debe permitirnos trabajar desde nuestro propio espacio, bajo nuestras propias reglas, asegurando que la herramienta sirva a la vida y nunca al revés."</p>
+            <p>Un sistema diseñado para adaptarse al ritmo humano, eliminando el ruido digital y priorizando la intuición pura por encima de las pantallas frías.</p>
+        </div>
+
+        <!-- Sección 03: Hacia el 2045 -->
+        <div id="seccion-3" class="seccion">
+            <h2>03. Hacia el 2045</h2>
+            <p>Bitácora de evolución, notas de prototipado físico y el registro constante de un camino trazado hacia el futuro. Cada línea de código es un paso hacia la soberanía.</p>
+            
+            <div class="bitacora-item">
+                <div class="bitacora-fecha">Módulo Activo / Prototipo 01</div>
+                <p style="margin: 0; font-size: 0.9rem;">Integración del núcleo de luz bioluminiscente con respuesta háptica y frecuencia sonora armónica directa en TrebEdit.</p>
+            </div>
+        </div>
+
+        <!-- Sección 04: Se Parte del Mañana -->
+        <div id="seccion-4" class="seccion">
+            <h2>04. Se Parte del Mañana</h2>
+            <p>Este es un llamado para mentes libres, creadores y visionarios que entienden que el futuro no se espera, se diseña.</p>
+            <p class="cita-padre">"Abrimos puentes para colaboraciones, alianzas y sinergias que vibren en sintonía con la soberanía tecnológica y el desarrollo autónomo."</p>
+            <p>Si resuenas con este propósito y quieres sumar valor a lo que estamos construyendo desde el origen, el espacio está abierto.</p>
+        </div>
+    </main>
+
+    <script>
+        function cambiarSeccion(idSeccion, boton) {
+            document.querySelectorAll('.seccion, .seccion-centro').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(idSeccion).classList.add('active');
+            boton.classList.add('active');
+        }
+
+        const nucleo = document.getElementById('nucleo');
+
+        function emitirSonidoOrganico() {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(216, audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1.2);
+        }
+
+        nucleo.addEventListener('click', () => {
+            if (navigator.vibrate) {
+                navigator.vibrate(40); 
+            }
+            
+            nucleo.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                nucleo.style.transform = 'scale(1)';
+            }, 300);
+
+            emitirSonidoOrganico();
+        });
+
+        nucleo.addEventListener('mouseenter', () => {
+            nucleo.style.boxShadow = '0 0 65px rgba(255, 255, 255, 0.95)';
+        });
+
+        nucleo.addEventListener('mouseleave', () => {
+            nucleo.style.boxShadow = '0 0 35px rgba(120, 200, 255, 0.5)';
+        });
+    </script>
+</body>
+</html>
